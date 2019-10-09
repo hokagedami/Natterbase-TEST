@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const validate = require('../modules/validate');
 const removeAttribute = require('../modules/remove-attribute');
-const lowestIndex = require('../modules/lowest-index');
 
 router.post('/validate', ((req, res) => {
     const { data, rules } = req.body;
@@ -14,17 +13,10 @@ router.post('/remove-attribute', ((req, res) => {
     const { data, item } = req.body;
     const result = removeAttribute(data, item);
     if (result === 'attribute not found') {
-        res.status(404);
-        res.send(result);
+        res.status(404).send(result);
     } else {
         res.send(result);
     }
-}));
-
-router.post('/lowest-index', ((req, res) => {
-    const { magic, distance } = req.body;
-    const index = lowestIndex(magic, distance);
-    res.send(index);
 }));
 
 module.exports = router;
